@@ -24,7 +24,7 @@ AT+S.WCFG
 AT+S.FSUPDATE=i,192.168.0.51,\fs.img,,,,
 
 # Write data to robot.fhtml table
-AT+S.INPUTSSI=<strlen><CR>
+AT+S.INPUTSSI=<string lenght><CR>
 |10|20|30.3|40|55|<CR>
 
 
