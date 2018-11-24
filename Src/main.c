@@ -153,15 +153,9 @@ int main(void)
 	Set_UartMsgHandle(&huart3); //this is required for the console handler initialization
 #endif
 
-	printf("\r\n\n/********************************************************\n");
-	printf("\r *                                                      *\n");
-	printf("\r * X-CUBE-WIFI1 Expansion Software v3.1.1               *\n");
-	printf("\r * Console Application                                  *\n");
-	printf("\r * Send AT commands to SPWF module directly             *\n");
-	printf("\r *                                                      *\n");
-	printf("\r *******************************************************/\n\r\n");
+	printf("\r\n Robot console starting \r\n");
 
-	printf("\rPlease wait...\r\n");
+	printf("\r\n Please wait... \r\n");
 
 
 #if defined (USE_STM32L0XX_NUCLEO)
@@ -175,14 +169,14 @@ int main(void)
 
 	autodetect = HAL_OK;
 
-	if (autodetect == HAL_OK)
-		;
-		// UART_DMA_Init();
-	else {
-		printf("\rError in baud-rate auto-detection...\r\n");
-	}
+//	if (autodetect == HAL_OK)
+		UART_DMA_Init();
+//	else {
+//		printf("\rError in baud-rate auto-detection...\r\n");
+//	}
+
 	HAL_Delay(2000);
-	printf("\rConsole Ready...\r\n");
+	printf("\r\n Console Ready... \r\n");
 
 	//	AT commands to program Wifi module
 	//	AT+S.SCFG=blink_led,0
@@ -212,28 +206,28 @@ int main(void)
 
   /* USER CODE END WHILE */
 
-		 memset(AT_Str, '\0', 400);
-		 memset(Value_Str, '\0', 400);
-
-		uint8_t len_value,len_at;
-		 len_value = sprintf(Value_Str,"|10|20|30.3|40|55|68|78|811|99|100|10|20|30.3|40|55|68|Status GOOD|\r");
-		 len_at = sprintf(AT_Str,"AT+S.INPUTSSI=%d\r",len_value);
-		 HAL_UART_Transmit_DMA(&huart2, (uint8_t *) AT_Str, len_at);
-		 HAL_Delay(5000);
-		 HAL_UART_Transmit_DMA(&huart2, (uint8_t *) Value_Str, len_value);
-
-		HAL_Delay(5000);
-
-		memset(AT_Str, '\0', 400);
-		memset(Value_Str, '\0', 400);
-
-		len_value = sprintf(Value_Str,"|10|20|30.3|40|55|68|78|811|99|100|10|20|30.3|40|55|68|Status BAD|\r");
-		len_at = sprintf(AT_Str,"AT+S.INPUTSSI=%d\r",len_value);
-		HAL_UART_Transmit_DMA(&huart2, (uint8_t *) AT_Str, len_at);
-		HAL_Delay(5000);
-		HAL_UART_Transmit_DMA(&huart2, (uint8_t *) Value_Str, len_value);
-
-		HAL_Delay(5000);
+//		 memset(AT_Str, '\0', 400);
+//		 memset(Value_Str, '\0', 400);
+//
+//		uint8_t len_value,len_at;
+//		 len_value = sprintf(Value_Str,"|10|20|30.3|40|55|68|78|811|99|100|10|20|30.3|40|55|68|Status GOOD|\r");
+//		 len_at = sprintf(AT_Str,"AT+S.INPUTSSI=%d\r",len_value);
+//		 HAL_UART_Transmit_DMA(&huart2, (uint8_t *) AT_Str, len_at);
+//		 HAL_Delay(5000);
+//		 HAL_UART_Transmit_DMA(&huart2, (uint8_t *) Value_Str, len_value);
+//
+//		HAL_Delay(5000);
+//
+//		memset(AT_Str, '\0', 400);
+//		memset(Value_Str, '\0', 400);
+//
+//		len_value = sprintf(Value_Str,"|10|20|30.3|40|55|68|78|811|99|100|10|20|30.3|40|55|68|Status BAD|\r");
+//		len_at = sprintf(AT_Str,"AT+S.INPUTSSI=%d\r",len_value);
+//		HAL_UART_Transmit_DMA(&huart2, (uint8_t *) AT_Str, len_at);
+//		HAL_Delay(5000);
+//		HAL_UART_Transmit_DMA(&huart2, (uint8_t *) Value_Str, len_value);
+//
+//		HAL_Delay(5000);
 
 
   /* USER CODE BEGIN 3 */
