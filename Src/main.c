@@ -139,8 +139,9 @@ int main(void)
 
 	HAL_StatusTypeDef autodetect = HAL_OK;
 
-	char AT_Str[4] = "AT\r\n";
-	char AT_Rpl[4000];
+	char AT_Str[400];
+	char Value_Str[400];
+	char AT_Rpl[400];
 
 #ifdef USART_PRINT_MSG
 	// UART_Msg_Gpio_Init();
@@ -175,7 +176,8 @@ int main(void)
 	autodetect = HAL_OK;
 
 	if (autodetect == HAL_OK)
-		UART_DMA_Init();
+		;
+		// UART_DMA_Init();
 	else {
 		printf("\rError in baud-rate auto-detection...\r\n");
 	}
@@ -210,14 +212,29 @@ int main(void)
 
   /* USER CODE END WHILE */
 
-		// memset(AT_Rpl, '\0', 400);
-		// HAL_UART_Transmit(&huart2, (uint8_t *) AT_Str, 4, 100);
-		// HAL_UART_Receive(&huart2, (uint8_t *) AT_Rpl, 400, 3000);
-		// HAL_UART_Transmit(&huart3, (uint8_t *) AT_Rpl, strlen(AT_Rpl), 100);
-		// printf(AT_Rpl);
-		// printf("\r\n ----- \r\n");
-		// HAL_Delay(3000);
-		// printf(".");
+		 memset(AT_Str, '\0', 400);
+		 memset(Value_Str, '\0', 400);
+
+		uint8_t len_value,len_at;
+		 len_value = sprintf(Value_Str,"|10|20|30.3|40|55|68|78|811|99|100|10|20|30.3|40|55|68|Status GOOD|\r");
+		 len_at = sprintf(AT_Str,"AT+S.INPUTSSI=%d\r",len_value);
+		 HAL_UART_Transmit_DMA(&huart2, (uint8_t *) AT_Str, len_at);
+		 HAL_Delay(5000);
+		 HAL_UART_Transmit_DMA(&huart2, (uint8_t *) Value_Str, len_value);
+
+		HAL_Delay(5000);
+
+		memset(AT_Str, '\0', 400);
+		memset(Value_Str, '\0', 400);
+
+		len_value = sprintf(Value_Str,"|10|20|30.3|40|55|68|78|811|99|100|10|20|30.3|40|55|68|Status BAD|\r");
+		len_at = sprintf(AT_Str,"AT+S.INPUTSSI=%d\r",len_value);
+		HAL_UART_Transmit_DMA(&huart2, (uint8_t *) AT_Str, len_at);
+		HAL_Delay(5000);
+		HAL_UART_Transmit_DMA(&huart2, (uint8_t *) Value_Str, len_value);
+
+		HAL_Delay(5000);
+
 
   /* USER CODE BEGIN 3 */
 
